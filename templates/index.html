@@ -21,6 +21,11 @@
             background-position: center;
         }
 
+        a {
+            color: white;
+            text-decoration: none;
+        }
+
         .ranked-section-header {
             display: flex;
             flex-direction: row;
@@ -35,11 +40,13 @@
         }
 
         .menu-btn {
+            width: 30px;
+            height: 30px;
             background-color: black;
             border: none;
         }
 
-        d6da8b199c715b482cc16b51806a3f4e .btn-img {
+        .btn-img {
             border: none;
             background-color: black;
         }
@@ -47,7 +54,7 @@
         .ranked-movie-container {
             display: flex;
             flex-direction: row;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
         }
 
@@ -57,14 +64,14 @@
             align-items: center;
             justify-content: center;
 
-            /* width: 300px;
-            height: 500px; */
             position: relative;
             background-color: rgba(255, 255, 255, 0.1);
             margin: 20px;
             width: 60%;
             height: 60%;
             border-radius: 20px;
+
+            
         }
 
         .ranked-movie-poster {
@@ -74,37 +81,22 @@
             padding-top: 30px;
         }
 
+
         .ranked-movie-name {
             font-size: 40px;
             margin: 10px;
+            font-size: 2vw;
+            text-align: center;
+
+            width:100px; 
+            white-space:nowrap; 
+            overflow:hidden; 
+            text-overflow:ellipsis;
         }
 
         .ranked-movie-rate {
+            color: white;
             font-size: 30px;
-        }
-
-
-        /* 화면 너비가 800px 이하일 때 폰트 크기 조절 */
-        @media (max-width: 800px) {
-            .ranked-movie-name {
-                font-size: 20px;
-            }
-
-            .ranked-movie-rate {
-                font-size: 10px;
-                margin-bottom: 10px;
-            }
-        }
-
-        /* 화면 너비가 500px 이하일 때 폰트 크기 조절 */
-        @media (max-width: 500px) {
-            .ranked-movie-name {
-                font-size: 20px;
-            }
-
-            .ranked-movie-rate {
-                font-size: 15px;
-            }
         }
 
         /* -----------------상영작-----------------  */
@@ -117,13 +109,13 @@
         .movie-container {
             display: flex;
             flex-direction: row;
-            align-items: center;
+            align-items: flex-start;
             justify-content: flex-start;
             flex-wrap: wrap;
+
         }
 
         .movie {
-
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -147,42 +139,21 @@
         }
 
         .movie-name {
+            color: white;
             font-size: 25px;
             margin: 10px;
+            font-size: 1vw;
+            text-align: center;
         }
 
         .movie-rate {
+            color: white;
             font-size: 20px;
-        }
-
-
-        /* 화면 너비가 800px 이하일 때 폰트 크기 조절 */
-        @media (max-width: 800px) {
-            .movie-name {
-                font-size: 20px;
-            }
-
-            .movie-rate {
-                font-size: 10px;
-                margin-bottom: 10px;
-            }
-        }
-
-        /* 화면 너비가 500px 이하일 때 폰트 크기 조절 */
-        @media (max-width: 500px) {
-            .movie-name {
-                font-size: 20px;
-            }
-
-            .movie-rate {
-                font-size: 15px;
-            }
         }
     </style>
     <script>
         $(document).ready(function () {
             $.post("http://localhost:8000/movie", function (data, status) {
-                console.log("Data: " + data + "\nStatus: " + status);
                 listing();
             });
         });
@@ -197,17 +168,16 @@
                     let poster = a['poster']
                     let rank = a['rank']
                     let rate = a['rate']
-
-
+                    let url = a['url']
                     let ranked_temp_html = `<div class="ranked-movie">
                                     <img class="ranked-movie-poster" src=${poster} />
-                                    <div class="ranked-movie-name">${title}</div>
+                                    <div class="ranked-movie-name"><a href="https://movie.daum.net${url}">${title}</a></div>
                                     <div class="ranked-movie-rate">평점 ${rate}</div>
                                 </div>`
 
                     let temp_html = `<div class="movie">
                                         <img class="movie-poster" src=${poster} />
-                                        <div class="movie-name">${title}</div>
+                                        <div class="movie-name"><a href="https://movie.daum.net${url}">${title}</a></div>
                                         <div class="movie-rate">${rate}</div>
                                     </div>`
 
@@ -219,21 +189,6 @@
                 })
             })
         }
-        // function posting() {
-        //     let url = $('#url').val()
-        //     let comment = $('#comment').val()
-        //     let star= $('#star').val()
-
-        //     let formData = new FormData()
-        //     formData.append("url_give", url)
-        //     formData.append("comment_give", comment)
-        //     formData.append("star_give", star)
-
-        //     fetch('/movie', {method: "POST",body: formData}).then(res => res.json()).then(data => {
-        //             alert(data['msg'])
-        //             window.location.reload()
-        //         })
-        // }
     </script>
 </head>
 
@@ -249,31 +204,30 @@
                         </button>
                     </div>
                 </div>
-                < </div>
-                    <div class="ranked-movie-container">
-                        <div class="ranked-movie">
-                            <img class="ranked-movie-poster"
-                                src="https://t1.daumcdn.net/movie/b05fec37909f3c46d8ada73ba1d2bc2f8868e869" />
-                            <div class="ranked-movie-name">범죄도시3</div>
-                            <div class="ranked-movie-rate">평점 6.8</div>
-                        </div>
-                    </div>
+            </div>
+            <div class="ranked-movie-container">
+                <div class="ranked-movie">
+                    <img class="ranked-movie-poster" src="#" />
+                    <div class="ranked-movie-name"></div>
+                    <div class="ranked-movie-rate"></div>
+                </div>
+
             </div>
         </header>
-        <main>
-            <div class="movie-list">
-                <div class="movie-section-header">상영작</div>
-                <div class="movie-container">
-                    <div class="movie">
-                        <img class="movie-poster"
-                            src="https://t1.daumcdn.net/movie/b05fec37909f3c46d8ada73ba1d2bc2f8868e869" />
-                        <div class="movie-name">범죄도시3</div>
-                        <div class="movie-rate">6.8</div>
-                    </div>
-                </div>
-            </div>
-        </main>
     </div>
+    <main>
+        <div class="movie-list">
+            <div class="movie-section-header">상영작</div>
+            <div class="movie-container">
+                <div class="movie">
+                    <img class="movie-poster" src="#" />
+                    <div class="movie-name"><a href="#"></a></div>
+                    <div class="movie-rate"></div>
+                </div>
+
+            </div>
+        </div>
+    </main>
     <footer>
 
     </footer>
